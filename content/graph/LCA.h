@@ -34,3 +34,20 @@ struct LCA {
 	}
 	//dist(a,b){return depth[a] + depth[b] - 2*depth[lca(a,b)];}
 };
+
+int main() {
+    // 1. Setup minimal tree (0-indexed, root is 0)
+    // Edges: 0-1, 0-2, 2-3, 2-4
+    int N = 5; vector<vi> adj(N);
+    adj[0]={1,2}; adj[1]={0}; adj[2]={0,3,4}; adj[3]={2}; adj[4]={2};
+
+    // 2. Initialize LCA (O(N log N) prep)
+    LCA tree(adj);
+
+    // 3. O(1) Queries
+    cout << tree.lca(1, 4) << "\n"; // Outputs 0 (LCA of 1 and 4)
+    cout << tree.lca(3, 4) << "\n"; // Outputs 2 (LCA of 3 and 4)
+    cout << tree.lca(2, 4) << "\n"; // Outputs 2 (LCA of an ancestor and its descendant)
+
+    return 0;
+}

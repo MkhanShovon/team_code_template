@@ -1,5 +1,5 @@
 /**
- * Author: Håkan Terelius
+ * Author: Hakan Terelius
  * Date: 2009-09-25
  * License: CC0
  * Source: http://en.wikipedia.org/wiki/Euler's_totient_function

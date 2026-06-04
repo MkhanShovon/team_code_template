@@ -1,5 +1,5 @@
 /**
- * Author: Mårten Wiman
+ * Author: Marten Wiman
  * License: CC0
  * Source: Pisinger 1999, "Linear Time Algorithms for Knapsack Problems with Bounded Weights"
  * Description: Given N non-negative integer weights w and a non-negative target t,
