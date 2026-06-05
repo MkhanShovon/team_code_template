@@ -27,5 +27,8 @@ ll inversions(vector<int>& a) {
 		inv += i - t.order_of_key(a[i]);
 		t.insert(a[i]);
 	}
+
+	//t.order_of_key(x) returns the number of elements in the tree that are strictly less than x.
+	//*t.find_by_order(k) returns an iterator to the k-th smallest element in the tree (0-indexed).
 	return inv;
 }
