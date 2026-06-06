@@ -101,22 +101,22 @@ struct LazySeg
 	void upd(int l, int r, U v) { upd(l, r, v, 0, 0, n); }
 	void set(int i, T v) { set(i, v, 0, 0, n); }
 	T qry(int l, int r) { return qry(l, r, 0, 0, n); }
+/** Usage examples:
+	 * // 1. Range Add / Range Sum
+	 * auto cq_sum = [](ll a, ll b){ return a + b; };
+	 * auto cu_add = [](ll a, ll b){ return a + b; };
+	 * auto au_sum = [](ll a, ll b, int len){ return a + b * len; };
+	 * LazySeg seg(n, 0LL, 0LL, cq_sum, cu_add, au_sum, a);
+	 *
+	 * // 2. Range Add / Range Min
+	 * auto cq_min = [](ll a, ll b){ return min(a, b); };
+	 * auto au_min = [](ll a, ll b, int len){ return a + b; };
+	 * LazySeg seg(n, (ll)1e18, 0LL, cq_min, cu_add, au_min, a);
+	 *
+	 * // 3. Range Assign / Range Sum
+	 * auto cu_set = [](ll a, ll b){ return b; };
+	 * auto au_set = [](ll a, ll b, int len){ return b * len; };
+	 * LazySeg seg(n, 0LL, -1LL, cq_sum, cu_set, au_set, a);
+ */
 };
 
-/** Usage examples:
- * // 1. Range Add / Range Sum
- * auto cq_sum = [](ll a, ll b){ return a + b; };
- * auto cu_add = [](ll a, ll b){ return a + b; };
- * auto au_sum = [](ll a, ll b, int len){ return a + b * len; };
- * LazySeg seg(n, 0LL, 0LL, cq_sum, cu_add, au_sum, a);
- *
- * // 2. Range Add / Range Min
- * auto cq_min = [](ll a, ll b){ return min(a, b); };
- * auto au_min = [](ll a, ll b, int len){ return a + b; };
- * LazySeg seg(n, (ll)1e18, 0LL, cq_min, cu_add, au_min, a);
- *
- * // 3. Range Assign / Range Sum
- * auto cu_set = [](ll a, ll b){ return b; };
- * auto au_set = [](ll a, ll b, int len){ return b * len; };
- * LazySeg seg(n, 0LL, -1LL, cq_sum, cu_set, au_set, a);
- */
