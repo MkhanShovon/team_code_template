@@ -119,18 +119,13 @@ struct SuffixArray {
 };
 
 int main() {
-    ios::sync_with_stdio(false); cin.tie(NULL);
-    string text = "abacaba";
-    SuffixArray sa(text);
-    // Problem 1: Substring Comparison
-    // Substring 1: "aba" (0 to 2), Substring 2: "ba" (1 to 2)
-    cout << "Is 'aba' < 'ba'? " << (sa.compare_substrings(0, 2, 1, 2) ? "Yes" : "No") << "\n";
-    // Problem 2: Count pattern occurrences (O(|pat| * log N))
-    string pattern = "aba";
-    cout << "Occurrences of '" << pattern << "': " << sa.count_occurrences(pattern) << "\n"; // Expected: 2
-    // Problem 3: Count internal substring occurrences (O(log N))
-    // Substring starting at index 0 with length 3 ("aba")
-    pair<int, int> occ_range = sa.find_occurrence(0, 3);
-    cout << "Occurrences (using internal O(log N) method): " << (occ_range.second - occ_range.first + 1) << "\n"; // Expected: 2
+    SuffixArray sa(s);
+    int match_len = sa.get_lcp(2, 5);              // LCPে
+    bool is_less = sa.comp_sub(1, 3, 4, 6);        // Substring compare
+    string pat = "abc";
+    int freq1 = sa.count_pat(pat);               // outsider pattern
+    pair<int, int> range = sa.find_pat(pat);     //{first_rank, last_rank}
+    auto range = sa.find_occ(0, 3);                // substring of s
+    int freq2 = range.second - range.first + 1;
     return 0;
 }
