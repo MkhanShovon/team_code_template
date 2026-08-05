@@ -1,3 +1,16 @@
+/**
+ * Author: Adapted from CP-Algorithms
+ * Date: 2026-08-05
+ * Source: https://cp-algorithms.com/string/suffix-array.html
+ * Description: O(N log N) Suffix Array construction using Prefix Doubling 
+ *  and Counting Sort. Builds Suffix Array (p), Inverse Suffix Array (pos),
+ *  LCP Array using Kasai's algorithm (lcp), and a Sparse Table (st) for 
+ *  O(1) Range Minimum Queries on the LCP array.
+ *  Suffixes are sorted lexicographically. 
+ *  To get a common prefix between any two substrings, use get_lcp(i, j).
+ * Time: O(N log N) for SA construction, O(N) for LCP, O(N log N) for Sparse Table. 
+ *  O(|Pattern| log N) for pattern matching, O(1) for substring comparisons.
+ */
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -23,12 +36,15 @@ struct SuffixArray {
         build_sparse_table();
     }
 
-    // 1. O(N log N) Suffix Array Construction
+    // 1. O(N log N) Suffix Array Construction (Optimized with Counting Sort)
     void build_suffix_array() {
         vector<int> c(n);
+        
+        // Step 0: Base case for length 1
+        // We use counting sort for single characters to make it O(N)
         vector<pair<char, int>> a(n);
         for (int i = 0; i < n; i++) a[i] = {s[i], i};
-        sort(a.begin(), a.end());
+        sort(a.begin(), a.end()); // sort for length 1 is fast enough, O(N log N) is fine here
         
         for (int i = 0; i < n; i++) p[i] = a[i].second;
         c[p[0]] = 0;
@@ -37,22 +53,54 @@ struct SuffixArray {
             else c[p[i]] = c[p[i - 1]] + 1;
         }
 
-        for (int k = 0; (1 << k) < n; k++) {
-            int len = 1 << k;
-            vector<pair<pair<int, int>, int>> a_step(n);
+        // Loop for lengths 2, 4, 8... 
+        int k = 0;
+        while ((1 << k) < n) {
+            // Smart Shift: Sort by the second element of the pair in O(N)
+            // without actually doing a sort!
             for (int i = 0; i < n; i++) {
-                a_step[i] = {{c[i], c[(i + len) % n]}, i};
+                p[i] = (p[i] - (1 << k) + n) % n;
             }
-            sort(a_step.begin(), a_step.end());
-            
-            for (int i = 0; i < n; i++) p[i] = a_step[i].second;
-            c[p[0]] = 0;
+
+            // Counting Sort by the first element of the pair in O(N)
+            count_sort(p, c);
+
+            // Reassign classes (ranks)
+            vector<int> c_new(n);
+            c_new[p[0]] = 0;
             for (int i = 1; i < n; i++) {
-                if (a_step[i].first == a_step[i - 1].first) c[p[i]] = c[p[i - 1]];
-                else c[p[i]] = c[p[i - 1]] + 1;
+                pair<int, int> prev = {c[p[i - 1]], c[(p[i - 1] + (1 << k)) % n]};
+                pair<int, int> now = {c[p[i]], c[(p[i] + (1 << k)) % n]};
+                
+                if (now == prev) c_new[p[i]] = c_new[p[i - 1]];
+                else c_new[p[i]] = c_new[p[i - 1]] + 1;
             }
+            c = c_new;
+            k++;
         }
+        
+        // Build Inverse Suffix Array
         for (int i = 0; i < n; i++) pos[p[i]] = i;
+    }
+
+    // O(N) Counting Sort helper function
+    void count_sort(vector<int>& p, vector<int>& c) {
+        vector<int> cnt(n, 0);
+        for (auto x : c) cnt[x]++;
+        
+        vector<int> pos_bucket(n);
+        pos_bucket[0] = 0;
+        for (int i = 1; i < n; i++) {
+            pos_bucket[i] = pos_bucket[i - 1] + cnt[i - 1];
+        }
+        
+        vector<int> p_new(n);
+        for (auto x : p) {
+            int i = c[x];
+            p_new[pos_bucket[i]] = x;
+            pos_bucket[i]++;
+        }
+        p = p_new;
     }
 
     // 2. O(N) LCP Array Construction (Kasai's Algorithm)
@@ -66,7 +114,7 @@ struct SuffixArray {
             }
             int prev = p[now - 1];
             while (i + k < n && prev + k < n && s[i + k] == s[prev + k]) k++;
-            lcp[now - 1] = k;
+            lcp[now - 1] = k; // Note: lcp[i] stores LCP(p[i], p[i+1])
             k = max(0, k - 1);
         }
     }
@@ -88,7 +136,7 @@ struct SuffixArray {
 
     // Query the structural LCP between any two suffixes starting at index i and j
     int get_lcp(int i, int j) {
-        if (i == j) return n - i;
+        if (i == j) return n - i; // If same index, LCP is length of suffix from i
         int rankL = pos[i], rankR = pos[j];
         if (rankL > rankR) swap(rankL, rankR);
         rankR--; 
