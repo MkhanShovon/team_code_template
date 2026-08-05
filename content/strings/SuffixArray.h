@@ -120,7 +120,7 @@ struct SuffixArray {
 
 int main() {
     SuffixArray sa(s);
-    int match_len = sa.get_lcp(2, 5);              // LCPে
+    int match_len = sa.get_lcp(2, 5);              // LCP
     bool is_less = sa.comp_sub(1, 3, 4, 6);        // Substring compare
     string pat = "abc";
     int freq1 = sa.count_pat(pat);               // outsider pattern
