@@ -57,7 +57,7 @@ vector<int> SA_IS(const vector<int> &vec, int val_range) {
 
 struct SuffixArray {
     string s; int n;
-    vector<int> p, pos, lcp, lg; vector<vector<int>> st;
+    vector<int> p, pos, lcp, lg; vector<vector<int>> st; //p_i - starting ind of ith suff, pos_i - rank of ith suff, lcp_i - between i and i + 1
     SuffixArray(string text, char sentinel = '$') {
         s = text + sentinel; n = s.size(); pos.assign(n, 0); lcp.assign(n, 0);
         vector<int> vec(n); for (int i = 0; i < n; i++) vec[i] = s[i];
