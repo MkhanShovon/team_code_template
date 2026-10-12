@@ -38,6 +38,13 @@ struct TwoSat {
 		gr[f].push_back(j^1);
 		gr[j].push_back(f^1);
 	}
+
+	void implies(int u, int v) { either(~u, v); } // u => v
+    void equal(int u, int v) { implies(u, v); implies(v, u); } // u == v
+    void xor_edge(int u, int v) { either(u, v); either(~u, ~v); } // u ^ v = 1
+    void force(int u) { either(u, u); } // u must be true (pass ~u for false)
+	
+
 	void setValue(int x) { either(x, x); }
 
 	void atMostOne(const vi& li) { // (optional)
