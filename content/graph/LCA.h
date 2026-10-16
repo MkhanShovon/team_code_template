@@ -14,31 +14,31 @@
 #include "../data-structures/RMQ.h"
 
 struct LCA {
-	int T = 0;
-	vi time, path, ret;
-	RMQ<int> rmq;
-
-	LCA(vector<vi>& C) : time(sz(C)), rmq((dfs(C,0,-1), ret)) {}
-	void dfs(vector<vi>& C, int v, int par) {
+	ll T = 0;
+	vll time, path, ret, depth;
+	RMQ<ll> rmq;
+	LCA(vector<vll>& C) : time(len(C)), rmq((dfs(C,0,-1), ret)), depth(len(C)) {}
+	void dfs(vector<vll>& C, ll v, ll par) {
 		time[v] = T++;
-		for (int y : C[v]) if (y != par) {
+		for (ll y : C[v]) if (y != par) {
 			path.push_back(v), ret.push_back(time[v]);
+            depth[y] = depth[v] + 1;
 			dfs(C, y, v);
 		}
 	}
 
-	int lca(int a, int b) {
+	ll lca(ll a, ll b) {
 		if (a == b) return a;
 		tie(a, b) = minmax(time[a], time[b]);
 		return path[rmq.query(a, b)];
 	}
-	//dist(a,b){return depth[a] + depth[b] - 2*depth[lca(a,b)];}
+	ll dist(ll a, ll b){return depth[a] + depth[b] - 2*depth[lca(a,b)];}
 };
 
 int main() {
     // 1. Setup minimal tree (0-indexed, root is 0)
     // Edges: 0-1, 0-2, 2-3, 2-4
-    int N = 5; vector<vi> adj(N);
+    ll N = 5; vector<vll> adj(N);
     adj[0]={1,2}; adj[1]={0}; adj[2]={0,3,4}; adj[3]={2}; adj[4]={2};
 
     // 2. Initialize LCA (O(N log N) prep)
