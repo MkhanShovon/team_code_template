@@ -39,6 +39,7 @@ using vll = vector<ll>;
 #define rl(i, m, n) for (ll i = n; i >= m; i--)
 #define vr(v) v.begin(), v.end()
 #define rv(v) v.rbegin(), v.rend()
+#define unq(v) v.erase(unique(vr(v)), v.end())
 #define edl '\n'
 #define len(v) v.size()
 #define nl cout << edl;
