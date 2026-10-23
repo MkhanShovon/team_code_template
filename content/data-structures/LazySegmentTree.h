@@ -117,6 +117,12 @@ struct LazySeg
 	 * auto cu_set = [](ll a, ll b){ return b; };
 	 * auto au_set = [](ll a, ll b, int len){ return b * len; };
 	 * LazySeg seg(n, 0LL, -1LL, cq_sum, cu_set, au_set, a);
+	 * 
+	 * // 4. Range Assign / Range Min
+	 * auto cq_min = [](ll a, ll b) { return min(a, b); };
+	 * auto cu_set = [](ll a, ll b) { return b; };
+	 * auto au_min = [](ll a, ll b, int len) { return b; };
+	 * LazySeg seg(n, INF, NO_ASSIGN, cq_min, cu_set, au_min, a);
  */
 };
 
