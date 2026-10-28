@@ -7,10 +7,10 @@
  */
 #pragma once
 
-vi mobiusSieve(int n) {
-	vi mu(n + 1), lp(n + 1), primes;
+vll mobiusSieve(int n) {
+	vll mu(n + 1), lp(n + 1), primes;
 	mu[1] = 1;
-	rep(i,2,n + 1) {
+	fls(i,2,n) {
 		if (!lp[i]) lp[i] = i, primes.push_back(i), mu[i] = -1;
 		for (int p : primes) {
 			if (p > lp[i] || i * p > n) break;

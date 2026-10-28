@@ -40,6 +40,7 @@ using vll = vector<ll>;
 #define vr(v) v.begin(), v.end()
 #define rv(v) v.rbegin(), v.rend()
 #define unq(v) v.erase(unique(vr(v)), v.end())
+#define it-- prev(it)
 #define edl '\n'
 #define len(v) v.size()
 #define nl cout << edl;

@@ -13,18 +13,18 @@
 #include "FenwickTree.h"
 
 struct FT2 {
-	vector<vi> ys; vector<FT> ft;
+	vector<vll> ys; vector<FT> ft;
 	FT2(int limx) : ys(limx) {}
 	void fakeUpdate(int x, int y) {
-		for (; x < sz(ys); x |= x + 1) ys[x].push_back(y);
+		for (; x < len(ys); x |= x + 1) ys[x].push_back(y);
 	}
 	void init() {
-		for (vi& v : ys) sort(all(v)), ft.emplace_back(sz(v));
+		for (vll& v : ys) sort(vr(v)), v.erase(unique(vr(v)), v.end()), ft.emplace_back(len(v));
 	}
 	int ind(int x, int y) {
-		return (int)(lower_bound(all(ys[x]), y) - ys[x].begin()); }
+		return (int)(lower_bound(vr(ys[x]), y) - ys[x].begin()); }
 	void update(int x, int y, ll dif) {
-		for (; x < sz(ys); x |= x + 1)
+		for (; x < len(ys); x |= x + 1)
 			ft[x].update(ind(x, y), dif);
 	}
 	ll query(int x, int y) {
@@ -33,4 +33,9 @@ struct FT2 {
 			sum += ft[x-1].query(ind(x-1, y));
 		return sum;
 	}
+	ll query_range(int x1, int y1, int x2, int y2)
+    {
+        if (x1 > x2 or y1 > y2) return 0;
+        return query(x2 + 1, y2 + 1) - query(x1, y2 + 1) - query(x2 + 1, y1) + query(x1, y1);
+    }
 };
