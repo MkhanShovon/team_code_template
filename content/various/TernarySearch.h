@@ -22,38 +22,14 @@ int ternSearch(int a, int b, F f) {
 		if (f(mid) < f(mid+1)) a = mid; // (A)
 		else b = mid+1;
 	}
-	rep(i,a+1,b+1) if (f(a) < f(i)) a = i; // (B)
+	fls(i, a+1, b) if (f(a) < f(i)) a = i; // (B)
 	return a;
 }
 
-// Alternative ternary search variants.
-template<class F>
-auto ternarySearch(int l, int r, F f) {
-	while (r - l > 2) {
-		int m1 = l + (r - l) / 3;
-		int m2 = r - (r - l) / 3;
-		if (f(m1) < f(m2))
-			l = m1;
-		else
-			r = m2;
-	}
-	auto maxVal = f(l);
-	for (int i = l + 1; i <= r; i++) {
-		maxVal = max(maxVal, f(i));
-	}
-	return maxVal;
-}
-
-template<class F>
-double ternarySearch(double l, double r, F f) {
-	const double eps = 1e-9;
-	while (r - l > eps) {
-		double m1 = l + (r - l) / 3;
-		double m2 = r - (r - l) / 3;
-		if (f(m1) < f(m2))
-			l = m1;
-		else
-			r = m2;
+template<class F> double ternD(double l, double r, F f) { // max
+	fl(it, 200) {
+		double m1 = l + (r - l) / 3, m2 = r - (r - l) / 3;
+		if (f(m1) < f(m2)) l = m1; else r = m2;
 	}
 	return (l + r) / 2;
 }

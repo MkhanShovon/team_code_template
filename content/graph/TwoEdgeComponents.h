@@ -10,13 +10,13 @@
 
 struct TwoEdgeCC {
 	int n, comps = 0;
-	vector<vi> g, tree;
-	vi comp, ord, low, used;
-	vector<pii> bridges;
-	TwoEdgeCC(const vector<vi>& gr) : n(sz(gr)), g(gr), comp(n, -1),
+	vector<vll> g, tree;
+	vll comp, ord, low, used;
+	vector<pair<ll, ll>> bridges;
+	TwoEdgeCC(const vector<vll>& gr) : n(len(gr)), g(gr), comp(n, -1),
 		ord(n), low(n), used(n) {
 		int t = 0;
-		rep(i,0,n) if (!used[i]) dfs(i, -1, t), dfs2(i, comps++);
+		fl(i, n) if (!used[i]) dfs(i, -1, t), dfs2(i, comps++);
 		buildTree();
 	}
 	void dfs(int v, int p, int& t) {

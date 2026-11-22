@@ -10,8 +10,7 @@
  * Time: O(N) for SA & LCP, O(N log N) for Sparse Table, O(1) RMQ.
  * Status: stress-tested a bit
  */
-#include <bits/stdc++.h>
-using namespace std;
+#pragma once
 
 // --- SA-IS O(N) Core ---
 void induced_sort(const vector<int> &vec, int val_range, vector<int> &SA, const vector<bool> &sl, const vector<int> &lms_idx) {
@@ -117,15 +116,3 @@ struct SuffixArray {
         return ans;
     }
 };
-
-int main() {
-    SuffixArray sa(s);
-    int match_len = sa.get_lcp(2, 5);              // LCP
-    bool is_less = sa.comp_sub(1, 3, 4, 6);        // Substring compare
-    string pat = "abc";
-    int freq1 = sa.count_pat(pat);               // outsider pattern
-    pair<int, int> range = sa.find_pat(pat);     //{first_rank, last_rank}
-    auto range = sa.find_occ(0, 3);                // substring of s
-    int freq2 = range.second - range.first + 1;
-    return 0;
-}

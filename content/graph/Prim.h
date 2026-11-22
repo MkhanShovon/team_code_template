@@ -10,7 +10,7 @@
 #pragma once
 
 long long prim(const vector<vector<pair<int, int>>> &neighbors) {
-	const int n = sz(neighbors);
+	const int n = len(neighbors);
 	long long min_cost = 0;
 	vector<long long> dist(n, numeric_limits<long long>::max());
 	dist[0] = 0;

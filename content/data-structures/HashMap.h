@@ -13,9 +13,6 @@
  */
 #pragma once
 
-#include <bits/extc++.h> /** keep-include */
-using namespace __gnu_pbds;
-using namespace std;
 
 struct chash {
 	const uint64_t C = ll(4e18 * acos(0)) | 71; // large odd number

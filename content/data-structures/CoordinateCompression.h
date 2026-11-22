@@ -1,24 +1,17 @@
 /**
- * Author: Monjur Hossain Khan, OpenAI Codex
+ * Author: BUET_Orion
+ * Date: 2026-11-22
  * License: CC0
- * Description: Compresses values in a vector to the range [1..k] by sorted order.
- * Time: O(n log n)
+ * Description: Replaces each value by its rank among distinct values
+ * (0-indexed). Returns the sorted distinct values (vals[a[i]] = old a[i]).
+ * Time: O(N \log N)
  * Status: tested
  */
 #pragma once
 
-template<class T>
-void coordinateCompress(vector<T>& a) {
-	int n = (int)a.size();
-	if (n == 0) return;
-	vector<pair<T, int>> pairs(n);
-	for (int i = 0; i < n; ++i) {
-		pairs[i] = {a[i], i};
-	}
-	sort(pairs.begin(), pairs.end());
-	int nxt = 1;
-	for (int i = 0; i < n; ++i) {
-		if (i > 0 && pairs[i - 1].first != pairs[i].first) ++nxt;
-		a[pairs[i].second] = nxt;
-	}
+template<class T> vector<T> compress(vector<T>& a) {
+	vector<T> v = a;
+	sort(vr(v)), v.erase(unique(vr(v)), v.end());
+	for (T& x : a) x = lower_bound(vr(v), x) - v.begin();
+	return v;
 }

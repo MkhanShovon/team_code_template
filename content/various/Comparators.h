@@ -7,13 +7,13 @@
  */
 #pragma once
 
-bool firstAscSecondAsc(pii a, pii b) { return a.first == b.first ? a.second < b.second : a.first < b.first; }
-bool firstAscSecondDesc(pii a, pii b) { return a.first == b.first ? a.second > b.second : a.first < b.first; }
-bool firstDescSecondAsc(pii a, pii b) { return a.first == b.first ? a.second < b.second : a.first > b.first; }
-bool firstDescSecondDesc(pii a, pii b) { return a.first == b.first ? a.second > b.second : a.first > b.first; }
+bool firstAscSecondAsc(pair<ll, ll> a, pair<ll, ll> b) { return a.first == b.first ? a.second < b.second : a.first < b.first; }
+bool firstAscSecondDesc(pair<ll, ll> a, pair<ll, ll> b) { return a.first == b.first ? a.second > b.second : a.first < b.first; }
+bool firstDescSecondAsc(pair<ll, ll> a, pair<ll, ll> b) { return a.first == b.first ? a.second < b.second : a.first > b.first; }
+bool firstDescSecondDesc(pair<ll, ll> a, pair<ll, ll> b) { return a.first == b.first ? a.second > b.second : a.first > b.first; }
 
 struct PQFirstDescSecondAsc {
-	bool operator()(pii a, pii b) const {
+	bool operator()(pair<ll, ll> a, pair<ll, ll> b) const {
 		return a.first != b.first ? a.first < b.first : a.second > b.second;
 	}
 };

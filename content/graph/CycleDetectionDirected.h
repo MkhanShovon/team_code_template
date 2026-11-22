@@ -1,50 +1,29 @@
 /**
- * Author: Unknown
- * Date: 2024-01-01
+ * Author: BUET_Orion
+ * Date: 2026-11-22
  * License: CC0
- * Source: own work
- * Description: Cycle detection and reconstruction in a directed graph.
+ * Description: Finds a cycle in a directed graph; returns its vertices in
+ * order (first vertex not repeated), or empty if the graph is a DAG.
+ * For undirected graphs: skip the edge to the parent once, and use
+ * vis $\neq$ 0 instead of vis == 1 (or just use UnionFind).
  * Time: O(V + E)
  * Status: tested
  */
 #pragma once
 
-struct DirectedCycle {
-	int n;
-	vector<vector<int>> adj;
-	vector<char> color;
-	vector<int> parent;
-	int cycle_start = -1, cycle_end = -1;
-
-	DirectedCycle(int n) : n(n), adj(n), color(n, 0), parent(n, -1) {}
-
-	bool dfs(int v) {
-		color[v] = 1;
-		for (int u : adj[v]) {
-			if (color[u] == 0) {
-				parent[u] = v;
-				if (dfs(u)) return true;
-			} else if (color[u] == 1) {
-				cycle_end = v;
-				cycle_start = u;
-				return true;
+vll findCycle(const vector<vll>& g) {
+	int n = len(g); vll vis(n), par(n, -1), cyc;
+	auto dfs = [&](auto&& self, int v) -> bool {
+		vis[v] = 1;
+		for (int u : g[v]) {
+			if (vis[u] == 1) {
+				for (int x = v; x != u; x = par[x]) cyc.push_back(x);
+				cyc.push_back(u); reverse(vr(cyc)); return 1;
 			}
+			if (!vis[u] && (par[u] = v, self(self, u))) return 1;
 		}
-		color[v] = 2;
-		return false;
-	}
-
-	vector<int> find_cycle() {
-		for (int v = 0; v < n; v++) {
-			if (color[v] == 0 && dfs(v)) break;
-		}
-		if (cycle_start == -1) return {};
-		vector<int> cycle;
-		cycle.push_back(cycle_start);
-		for (int v = cycle_end; v != cycle_start; v = parent[v])
-			cycle.push_back(v);
-		cycle.push_back(cycle_start);
-		reverse(all(cycle));
-		return cycle;
-	}
-};
+		vis[v] = 2; return 0;
+	};
+	fl(i, n) if (!vis[i] && dfs(dfs, i)) break;
+	return cyc;
+}

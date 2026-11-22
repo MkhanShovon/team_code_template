@@ -13,28 +13,28 @@ typedef vector<double> vd;
 const double eps = 1e-12;
 
 int solveLinear(vector<vd>& A, vd& b, vd& x) {
-	int n = sz(A), m = sz(x), rank = 0, br, bc;
-	if (n) assert(sz(A[0]) == m);
-	vi col(m); iota(all(col), 0);
+	int n = len(A), m = len(x), rank = 0, br, bc;
+	if (n) assert(len(A[0]) == m);
+	vll col(m); iota(vr(col), 0);
 
-	rep(i,0,n) {
+	fl(i, n) {
 		double v, bv = 0;
-		rep(r,i,n) rep(c,i,m)
+		fls(r, i, n - 1) fls(c, i, m - 1)
 			if ((v = fabs(A[r][c])) > bv)
 				br = r, bc = c, bv = v;
 		if (bv <= eps) {
-			rep(j,i,n) if (fabs(b[j]) > eps) return -1;
+			fls(j, i, n - 1) if (fabs(b[j]) > eps) return -1;
 			break;
 		}
 		swap(A[i], A[br]);
 		swap(b[i], b[br]);
 		swap(col[i], col[bc]);
-		rep(j,0,n) swap(A[j][i], A[j][bc]);
+		fl(j, n) swap(A[j][i], A[j][bc]);
 		bv = 1/A[i][i];
-		rep(j,i+1,n) {
+		fls(j, i+1, n - 1) {
 			double fac = A[j][i] * bv;
 			b[j] -= fac * b[i];
-			rep(k,i+1,m) A[j][k] -= fac*A[i][k];
+			fls(k, i+1, m - 1) A[j][k] -= fac*A[i][k];
 		}
 		rank++;
 	}
@@ -43,7 +43,7 @@ int solveLinear(vector<vd>& A, vd& b, vd& x) {
 	for (int i = rank; i--;) {
 		b[i] /= A[i][i];
 		x[col[i]] = b[i];
-		rep(j,0,i) b[j] -= A[j][i] * b[i];
+		fl(j, i) b[j] -= A[j][i] * b[i];
 	}
 	return rank; // (multiple solutions if rank < m)
 }

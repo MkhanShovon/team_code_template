@@ -18,7 +18,7 @@ struct Edge {
 
 ll kruskal(int n, vector<Edge>& e) {
 	UF uf(n); // 0-based indexing
-	sort(all(e));
+	sort(vr(e));
 	ll ans = 0;
 	int edges = 0;
 	for (auto [w, u, v] : e) {

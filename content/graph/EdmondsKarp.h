@@ -13,15 +13,15 @@ template<class T> T edmondsKarp(vector<unordered_map<int, T>>&
 		graph, int source, int sink) {
 	assert(source != sink);
 	T flow = 0;
-	vi par(sz(graph)), q = par;
+	vll par(len(graph)), q = par;
 
 	for (;;) {
-		fill(all(par), -1);
+		fill(vr(par), -1);
 		par[source] = 0;
 		int ptr = 1;
 		q[0] = source;
 
-		rep(i,0,ptr) {
+		fl(i, ptr) {
 			int x = q[i];
 			for (auto e : graph[x]) {
 				if (par[e.first] == -1 && e.second > 0) {

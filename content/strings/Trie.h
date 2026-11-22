@@ -18,7 +18,7 @@ struct Trie {
 		int v = 0; t[v].pref++;
 		for (char ch : s) {
 			int c = ch - first;
-			if (t[v].next[c] == -1) t[v].next[c] = sz(t), t.emplace_back();
+			if (t[v].next[c] == -1) t[v].next[c] = len(t), t.emplace_back();
 			v = t[v].next[c]; t[v].pref++;
 		}
 		t[v].term++;

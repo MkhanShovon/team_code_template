@@ -13,32 +13,32 @@ struct SqrtRangeAdd {
 	vector<ll> a, lazy, sum;
 	SqrtRangeAdd(const vector<ll>& v = {}) { init(v); }
 	void init(const vector<ll>& v) {
-		a = v; n = sz(a); B = max(1, (int)sqrt(max(1, n)));
+		a = v; n = len(a); B = max(1, (int)sqrt(max(1, n)));
 		lazy.assign((n + B - 1) / B, 0);
-		sum.assign(sz(lazy), 0);
-		rep(i,0,n) sum[i / B] += a[i];
+		sum.assign(len(lazy), 0);
+		fl(i, n) sum[i / B] += a[i];
 	}
 	void add(int l, int r, ll x) {
 		int bl = l / B, br = r / B;
 		if (bl == br) {
-			rep(i,l,r + 1) a[i] += x, sum[bl] += x;
+			fls(i, l, r) a[i] += x, sum[bl] += x;
 			return;
 		}
-		rep(i,l,min(n, (bl + 1) * B)) a[i] += x, sum[bl] += x;
-		rep(b,bl + 1,br) lazy[b] += x;
-		rep(i,br * B,r + 1) a[i] += x, sum[br] += x;
+		fls(i, l, min(n, (bl + 1) * B) - 1) a[i] += x, sum[bl] += x;
+		fls(b, bl + 1, br - 1) lazy[b] += x;
+		fls(i, br * B, r) a[i] += x, sum[br] += x;
 	}
 	ll get(int i) { return a[i] + lazy[i / B]; }
 	ll query(int l, int r) {
 		ll ans = 0;
 		int bl = l / B, br = r / B;
 		if (bl == br) {
-			rep(i,l,r + 1) ans += get(i);
+			fls(i, l, r) ans += get(i);
 			return ans;
 		}
-		rep(i,l,min(n, (bl + 1) * B)) ans += get(i);
-		rep(b,bl + 1,br) ans += sum[b] + lazy[b] * min(B, n - b * B);
-		rep(i,br * B,r + 1) ans += get(i);
+		fls(i, l, min(n, (bl + 1) * B) - 1) ans += get(i);
+		fls(b, bl + 1, br - 1) ans += sum[b] + lazy[b] * min(B, n - b * B);
+		fls(i, br * B, r) ans += get(i);
 		return ans;
 	}
 };

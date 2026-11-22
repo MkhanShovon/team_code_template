@@ -10,10 +10,10 @@
 
 #include "SolveLinear.h"
 
-rep(j,0,n) if (j != i) // instead of rep(j,i+1,n)
+fl(j, n) if (j != i) // instead of fls(j, i+1, n - 1)
 // ... then at the end:
 x.assign(m, undefined);
-rep(i,0,rank) {
-	rep(j,rank,m) if (fabs(A[i][j]) > eps) goto fail;
+fl(i, rank) {
+	fls(j, rank, m - 1) if (fabs(A[i][j]) > eps) goto fail;
 	x[col[i]] = b[i] / A[i][i];
 fail:; }

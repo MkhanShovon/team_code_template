@@ -10,12 +10,12 @@
 #pragma once
 
 struct BlockCutTree {
-	vector<vi> comps, tree, g;
-	vi tin, low, isArt, id, st;
+	vector<vll> comps, tree, g;
+	vll tin, low, isArt, id, st;
 	int T = 0;
-	BlockCutTree(const vector<vi>& gr) : g(gr), tin(sz(g), -1), low(sz(g)),
-		isArt(sz(g)), id(sz(g), -1) {
-		rep(i,0,sz(g)) if (tin[i] == -1) st.clear(), dfs(i, -1);
+	BlockCutTree(const vector<vll>& gr) : g(gr), tin(len(g), -1), low(len(g)),
+		isArt(len(g)), id(len(g), -1) {
+		fl(i, len(g)) if (tin[i] == -1) st.clear(), dfs(i, -1);
 		build();
 	}
 	void dfs(int v, int p) {
@@ -38,10 +38,10 @@ struct BlockCutTree {
 		if (p == -1 && !ch) comps.push_back({v});
 	}
 	void build() {
-		int c = sz(comps);
-		rep(v,0,sz(g)) if (isArt[v]) id[v] = c++;
+		int c = len(comps);
+		fl(v, len(g)) if (isArt[v]) id[v] = c++;
 		tree.assign(c, {});
-		rep(i,0,sz(comps)) for (int v : comps[i]) {
+		fl(i, len(comps)) for (int v : comps[i]) {
 			if (isArt[v]) tree[i].push_back(id[v]), tree[id[v]].push_back(i);
 			else id[v] = i;
 		}

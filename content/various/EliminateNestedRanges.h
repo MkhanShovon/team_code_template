@@ -8,13 +8,13 @@
  */
 #pragma once
 
-vector<pii> eliminateNestedRanges(vector<pii> ranges) {
-	sort(all(ranges), [](pii a, pii b) {
+vector<pair<ll, ll>> eliminateNestedRanges(vector<pair<ll, ll>> ranges) {
+	sort(vr(ranges), [](pair<ll, ll> a, pair<ll, ll> b) {
 		return a.first == b.first ? a.second > b.second : a.first < b.first;
 	});
-	vector<pii> res;
+	vector<pair<ll, ll>> res;
 	int bestR = INT_MIN;
-	for (pii p : ranges) if (p.second > bestR) {
+	for (pair<ll, ll> p : ranges) if (p.second > bestR) {
 		res.push_back(p);
 		bestR = p.second;
 	}

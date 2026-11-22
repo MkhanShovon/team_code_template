@@ -12,11 +12,11 @@
 #pragma once
 
 struct RollbackUF {
-	vi e; vector<pii> st;
+	vll e; vector<pair<ll, ll>> st;
 	RollbackUF(int n) : e(n, -1) {}
 	int size(int x) { return -e[find(x)]; }
 	int find(int x) { return e[x] < 0 ? x : find(e[x]); }
-	int time() { return sz(st); }
+	int time() { return len(st); }
 	void rollback(int t) {
 		for (int i = time(); i --> t;)
 			e[st[i].first] = st[i].second;

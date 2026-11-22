@@ -14,24 +14,24 @@
  */
 #pragma once
 
-pair<int, vi> hungarian(const vector<vi> &a) {
+pair<int, vll> hungarian(const vector<vll> &a) {
 	if (a.empty()) return {0, {}};
-	int n = sz(a) + 1, m = sz(a[0]) + 1;
-	vi u(n), v(m), p(m), ans(n - 1);
-	rep(i,1,n) {
+	int n = len(a) + 1, m = len(a[0]) + 1;
+	vll u(n), v(m), p(m), ans(n - 1);
+	fls(i, 1, n - 1) {
 		p[0] = i;
 		int j0 = 0; // add "dummy" worker 0
-		vi dist(m, INT_MAX), pre(m, -1);
+		vll dist(m, INT_MAX), pre(m, -1);
 		vector<bool> done(m + 1);
 		do { // dijkstra
 			done[j0] = true;
 			int i0 = p[j0], j1, delta = INT_MAX;
-			rep(j,1,m) if (!done[j]) {
+			fls(j, 1, m - 1) if (!done[j]) {
 				auto cur = a[i0 - 1][j - 1] - u[i0] - v[j];
 				if (cur < dist[j]) dist[j] = cur, pre[j] = j0;
 				if (dist[j] < delta) delta = dist[j], j1 = j;
 			}
-			rep(j,0,m) {
+			fl(j, m) {
 				if (done[j]) u[p[j]] += delta, v[j] -= delta;
 				else dist[j] -= delta;
 			}
@@ -42,6 +42,6 @@ pair<int, vi> hungarian(const vector<vi> &a) {
 			p[j0] = p[j1], j0 = j1;
 		}
 	}
-	rep(j,1,m) if (p[j]) ans[p[j] - 1] = j - 1;
+	fls(j, 1, m - 1) if (p[j]) ans[p[j] - 1] = j - 1;
 	return {-v[0], ans}; // min cost
 }

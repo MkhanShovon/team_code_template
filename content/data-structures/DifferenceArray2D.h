@@ -20,7 +20,7 @@ struct Diff2D {
 	}
 	vector<vector<T>> build() {
 		vector<vector<T>> a(H, vector<T>(W));
-		rep(i,0,H) rep(j,0,W) {
+		fl(i, H) fl(j, W) {
 			T up = i ? a[i - 1][j] : T();
 			T left = j ? a[i][j - 1] : T();
 			T diag = i && j ? a[i - 1][j - 1] : T();

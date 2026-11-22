@@ -10,8 +10,8 @@
 
 template<class T>
 map<T, uint64_t> randomLabels(vector<T> v) {
-	sort(all(v));
-	v.erase(unique(all(v)), v.end());
+	sort(vr(v));
+	v.erase(unique(vr(v)), v.end());
 	mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 	map<T, uint64_t> mp;
 	set<uint64_t> used = {0};

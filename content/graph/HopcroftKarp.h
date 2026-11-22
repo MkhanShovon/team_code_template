@@ -12,9 +12,9 @@
  */
 #pragma once
 
-int hopcroftKarp(vector<vi>& g, vi& r) {
-	int n = sz(g), res = 0;
-	vi l(n, -1), q(n), d(n);
+int hopcroftKarp(vector<vll>& g, vll& r) {
+	int n = len(g), res = 0;
+	vll l(n, -1), q(n), d(n);
 	auto dfs = [&](auto f, int u) -> bool {
 		int t = exchange(d[u], 0) + 1;
 		for (int v : g[u])
@@ -23,12 +23,12 @@ int hopcroftKarp(vector<vi>& g, vi& r) {
 		return 0;
 	};
 	for (int t = 0, f = 0;; t = f = 0, d.assign(n, 0)) {
-		rep(i,0,n) if (l[i] == -1) q[t++] = i, d[i] = 1;
-		rep(i,0,t) for (int v : g[q[i]]) {
+		fl(i, n) if (l[i] == -1) q[t++] = i, d[i] = 1;
+		fl(i, t) for (int v : g[q[i]]) {
 			if (r[v] == -1) f = 1;
 			else if (!d[r[v]]) d[r[v]] = d[q[i]] + 1, q[t++] = r[v];
 		}
 		if (!f) return res;
-		rep(i,0,n) if (l[i] == -1) res += dfs(dfs, i);
+		fl(i, n) if (l[i] == -1) res += dfs(dfs, i);
 	}
 }

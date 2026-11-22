@@ -39,7 +39,7 @@ ll countP(ll n, ll p) {
 }
 ll factWithoutP(ll n, ll p, ll pk) {
 	vector<ll> f(pk + 1, 1);
-	rep(i,1,pk + 1) f[i] = f[i - 1] * (i % p ? i : 1) % pk;
+	fls(i, 1, pk) f[i] = f[i - 1] * (i % p ? i : 1) % pk;
 	ll r = 1;
 	while (n) {
 		r = r * binPow(f[pk], n / pk, pk) % pk * f[n % pk] % pk;
@@ -50,7 +50,7 @@ ll factWithoutP(ll n, ll p, ll pk) {
 ll nCrPrimePower(ll n, ll k, ll p, int q) {
 	if (k < 0 || k > n) return 0;
 	ll pk = 1;
-	rep(i,0,q) pk *= p;
+	fl(i, q) pk *= p;
 	ll e = countP(n, p) - countP(k, p) - countP(n - k, p);
 	if (e >= q) return 0;
 	ll r = factWithoutP(n, p, pk);

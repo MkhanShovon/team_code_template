@@ -9,13 +9,13 @@
 	\kactlimport{sideOf.h}
 	\kactlimport{OnSegment.h}
 	\kactlimport{linearTransformation.h}
-	% \kactlimport{LineProjectionReflection.h}
+	\kactlimport{LineProjectionReflection.h}
 	\kactlimport{Angle.h}
 
 \section{Circles}
 	\kactlimport{CircleIntersection.h}
 	\kactlimport{CircleTangents.h}
-	% \kactlimport{CircleLine.h}
+	\kactlimport{CircleLine.h}
 	\kactlimport{CirclePolygonIntersection.h}
 	\kactlimport{circumcircle.h}
 	\kactlimport{MinimumEnclosingCircle.h}
@@ -25,21 +25,27 @@
 	\kactlimport{PolygonArea.h}
 	\kactlimport{PolygonCenter.h}
 	\kactlimport{PolygonCut.h}
-	% \kactlimport{PolygonUnion.h}
 	\kactlimport{ConvexHull.h}
 	\kactlimport{HullDiameter.h}
 	\kactlimport{PointInsideHull.h}
-	\kactlimport{LineHullIntersection.h}
+	\kactlimport{HalfPlane.h}
+	\kactlimport{MinkowskiSum.h}
+	% \kactlimport{LineHullIntersection.h}
+	% \kactlimport{PolygonUnion.h}
+	\subsection{Pick's theorem}
+		Lattice polygon: $A = I + B/2 - 1$ ($I$ interior, $B$ boundary lattice points;
+		segment $(x_1,y_1)$--$(x_2,y_2)$ has $\gcd(|\Delta x|,|\Delta y|)+1$ lattice points).
+		Planar graph (Euler): $V - E + F = 1 + C$ ($C$ = \#components, counting the outer face).
 
 \section{Misc. Point Set Problems}
 	\kactlimport{ClosestPair.h}
 	% \kactlimport{ManhattanMST.h}
-	\kactlimport{kdTree.h}
+	% \kactlimport{kdTree.h}
 	% \kactlimport{DelaunayTriangulation.h}
-	\kactlimport{FastDelaunay.h}
+	% \kactlimport{FastDelaunay.h}
 
 \section{3D}
 	\kactlimport{PolyhedronVolume.h}
+	\kactlimport{sphericalDistance.h}
 	\kactlimport{Point3D.h}
 	\kactlimport{3dHull.h}
-	\kactlimport{sphericalDistance.h}

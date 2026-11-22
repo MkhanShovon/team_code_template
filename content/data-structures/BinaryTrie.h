@@ -15,7 +15,7 @@ struct BinaryTrie {
 		int v = 0; t[v].cnt++;
 		for (int b = B; b >= 0; --b) {
 			int c = (x >> b) & 1;
-			if (t[v].ch[c] == -1) t[v].ch[c] = sz(t), t.push_back({});
+			if (t[v].ch[c] == -1) t[v].ch[c] = len(t), t.push_back({});
 			v = t[v].ch[c]; t[v].cnt++;
 		}
 	}

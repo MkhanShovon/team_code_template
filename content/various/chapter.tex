@@ -3,17 +3,25 @@
 \section{Intervals}
 	\kactlimport{IntervalContainer.h}
 	\kactlimport{IntervalCover.h}
-	\kactlimport{ConstantIntervals.h}
-	\kactlimport{EliminateNestedRanges.h}
+	% \kactlimport{ConstantIntervals.h}
+	% \kactlimport{EliminateNestedRanges.h}
 
 \section{Misc. algorithms}
 	\kactlimport{TernarySearch.h}
-	\kactlimport{DecimalBinary.h}
-	\kactlimport{Mex.h}
-	\kactlimport{RandomHashing.h}
-	\kactlimport{Comparators.h}
 	\kactlimport{LIS.h}
 	\kactlimport{FastKnapsack.h}
+	% \kactlimport{DecimalBinary.h}
+	% \kactlimport{Mex.h}
+	% \kactlimport{RandomHashing.h}
+	% \kactlimport{Comparators.h}
+	\subsection{One-liners}
+		\begin{itemize}
+			\item Binary: \verb@bitset<64>(x).to_string()@, back: \verb@stoll(s, 0, 2)@.
+			\item Set/multiset hashing: give each value a random \verb@rng()@ label, hash = xor (set) or sum (multiset) of labels.
+			\item Josephus (every $k$-th dies, 0-indexed survivor): $J(1)=0$, $J(n)=(J(n-1)+k) \bmod n$; for $k=2$: $2(n-2^{\lfloor\log_2 n\rfloor})$.
+			\item Inversions: \texttt{oset}, add \verb@i - t.order_of_key(a[i])@ before inserting \texttt{a[i]}.
+			\item Nested ranges: sort by $(l\uparrow, r\downarrow)$; range $i$ is contained in an earlier one iff $r_i \le \max r_{<i}$.
+		\end{itemize}
 
 \section{Dynamic programming}
 	\kactlimport{KnuthDP.h}
@@ -25,6 +33,7 @@
 			Similarly one can catch SIGABRT (assertion failures) and SIGFPE (zero divisions).
 			\verb@_GLIBCXX_DEBUG@ failures generate SIGABRT (or SIGSEGV on gcc 5.4.0 apparently).
 		\item \verb@feenableexcept(29);@ kills the program on NaNs (\texttt 1), 0-divs (\texttt 4), infinities (\texttt 8) and denormals (\texttt{16}).
+		\item Compile with \verb@-fsanitize=address,undefined -D_GLIBCXX_DEBUG@ to catch out-of-bounds and overflow.
 	\end{itemize}
 
 \section{Optimization tricks}
@@ -34,7 +43,7 @@
 			\item \verb@x & -x@ is the least bit in \texttt{x}.
 			\item \verb@for (int x = m; x; ) { --x &= m; ... }@ loops over all subset masks of \texttt{m} (except \texttt{m} itself).
 			\item \verb@c = x&-x, r = x+c; (((r^x) >> 2)/c) | r@ is the next number after \texttt{x} with the same number of bits set.
-			\item \verb@rep(b,0,K) rep(i,0,(1 << K))@ \\ \verb@  if (i & 1 << b) D[i] += D[i^(1 << b)];@ computes all sums of subsets.
+			\item \verb@__builtin_popcountll(x)@, \verb@__builtin_ctzll(x)@, \verb@__lg(x)@ (highest set bit).
 		\end{itemize}
 	\subsection{Pragmas}
 		\begin{itemize}
@@ -42,10 +51,10 @@
 			\item \lstinline{#pragma GCC target ("avx2")} can double performance of vectorized code, but causes crashes on old machines.
 			\item \lstinline{#pragma GCC optimize ("trapv")} kills the program on integer overflows (but is really slow).
 		\end{itemize}
-	\kactlimport{FastMod.h}
 	\kactlimport{FastInput.h}
 	\kactlimport{BumpAllocator.h}
-	\kactlimport{SmallPtr.h}
-	\kactlimport{BumpAllocatorSTL.h}
+	% \kactlimport{FastMod.h}
+	% \kactlimport{SmallPtr.h}
+	% \kactlimport{BumpAllocatorSTL.h}
 	% \kactlimport{Unrolling.h}
-	\kactlimport{SIMD.h}
+	% \kactlimport{SIMD.h}

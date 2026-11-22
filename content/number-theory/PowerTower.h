@@ -24,8 +24,11 @@ ll powLift(ll a, ll e, ll m) {
 		if (e & 1) r = liftMod((__int128)r * a, m);
 	return r;
 }
+bool towerZero(const vector<ll>& a, int l, int r) {
+	return !a[l] && (l == r || !towerZero(a, l + 1, r));
+}
 ll powerTowerLift(const vector<ll>& a, int l, int r, ll m) {
-	if (m == 1) return 1;
+	if (m == 1) return !towerZero(a, l, r);
 	if (l == r) return liftMod(a[l], m);
 	return powLift(a[l], powerTowerLift(a, l + 1, r, phiSingle(m)), m);
 }

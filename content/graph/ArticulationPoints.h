@@ -7,9 +7,9 @@
  */
 #pragma once
 
-vi articulationPoints(const vector<vi>& g) {
-	int n = sz(g), T = 0;
-	vi tin(n, -1), low(n), art(n);
+vll articulationPoints(const vector<vll>& g) {
+	int n = len(g), T = 0;
+	vll tin(n, -1), low(n), art(n);
 	auto dfs = [&](int v, int p, auto&& dfs) -> void {
 		tin[v] = low[v] = T++;
 		int ch = 0;
@@ -25,6 +25,6 @@ vi articulationPoints(const vector<vi>& g) {
 		}
 		if (p == -1 && ch > 1) art[v] = 1;
 	};
-	rep(i,0,n) if (tin[i] == -1) dfs(i, -1, dfs);
+	fl(i, n) if (tin[i] == -1) dfs(i, -1, dfs);
 	return art;
 }

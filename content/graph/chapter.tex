@@ -4,15 +4,22 @@
 	\kactlimport{BellmanFord.h}
 	\kactlimport{FloydWarshall.h}
 	\kactlimport{TopoSort.h}
+	\kactlimport{Kruskal.h}
 
 \section{Network flow}
-	\kactlimport{PushRelabel.h}
+	\kactlimport{Dinic.h}
 	\kactlimport{MinCostMaxFlow.h}
-	\kactlimport{EdmondsKarp.h}
-	% \kactlimport{Dinic.h}
 	\kactlimport{MinCut.h}
 	\kactlimport{GlobalMinCut.h}
-	\kactlimport{GomoryHu.h}
+	% \kactlimport{PushRelabel.h}
+	% \kactlimport{EdmondsKarp.h}
+	% \kactlimport{GomoryHu.h}
+	\subsection{Flow with lower bounds}
+		Edge $u\to v$ with $l \le f \le c$: add edge with capacity $c-l$, $D[v] \mathrel{+}= l$, $D[u] \mathrel{-}= l$.
+		New source $S'$, sink $T'$: for $D[x]>0$ add $S'\to x$ ($D[x]$), for $D[x]<0$ add $x \to T'$ ($-D[x]$).
+		For an $s$-$t$ flow add $t\to s$ with capacity $\infty$. Feasible iff maxflow$(S',T') = \sum_{D>0} D$.
+		Then max flow = flow on $t\to s$ + maxflow$(s,t)$ in the residual graph (after removing $t\to s$);
+		for min flow, compute maxflow$(t,s)$ instead and subtract.
 
 \section{Matching}
 	\kactlimport{HopcroftKarp.h}
@@ -20,37 +27,36 @@
 	\kactlimport{MinimumVertexCover.h}
 	\kactlimport{WeightedMatching.h}
 	\kactlimport{GeneralMatching.h}
+	\subsection{Theorems}
+		K\H{o}nig: in bipartite graphs max matching = min vertex cover; max independent set = $V$ $-$ max matching;
+		min edge cover = $V$ $-$ max matching (no isolated vertices).
+		Hall: perfect matching of $L$ iff $|N(S)| \ge |S|$ for all $S \subseteq L$.
+		Dilworth: in a DAG/poset, min chain cover (vertex-disjoint paths in the transitive closure) = max antichain
+		= $V$ $-$ max matching in the split graph ($u_{out} \to v_{in}$ for each $u < v$).
+		Min vertex-disjoint path cover of a DAG = $V$ $-$ max matching on its edges.
 
 \section{DFS algorithms}
 	\kactlimport{SCC.h}
-	\kactlimport{BiconnectedComponents.h}
-	\kactlimport{ArticulationPoints.h}
-	\kactlimport{TwoEdgeComponents.h}
-	\kactlimport{BlockCutTree.h}
 	\kactlimport{2sat.h}
+	\kactlimport{BlockCutTree.h}
+	\kactlimport{TwoEdgeComponents.h}
 	\kactlimport{EulerWalk.h}
 	\kactlimport{CycleDetectionDirected.h}
-	\kactlimport{CycleDetectionUndirected.h}
-	\kactlimport{CycleDetectionFunctional.h}
-
-\section{Coloring}
-	\kactlimport{EdgeColoring.h}
-
-\section{Heuristics}
-	\kactlimport{MaximalCliques.h}
-	\kactlimport{MaximumClique.h}
-	\kactlimport{MaximumIndependentSet.h}
+	% \kactlimport{BiconnectedComponents.h}
+	% \kactlimport{ArticulationPoints.h}
+	% \kactlimport{EdgeColoring.h}
+	% \kactlimport{MaximalCliques.h}
+	% \kactlimport{MaximumClique.h}
+	% \kactlimport{MaximumIndependentSet.h}
 
 \section{Trees}
 	\kactlimport{BinaryLifting.h}
 	\kactlimport{LCA.h}
 	\kactlimport{CompressTree.h}
 	\kactlimport{HLD.h}
+	\kactlimport{CentroidDecomposition.h}
 	\kactlimport{LinkCutTree.h}
-	\kactlimport{DirectedMST.h}
-	\kactlimport{EulerTour.h}
-	\kactlimport{Prim.h}
-	\kactlimport{Kruskal.h}
+	% \kactlimport{DirectedMST.h}
 
 \section{Math}
 	\subsection{Number of Spanning Trees}

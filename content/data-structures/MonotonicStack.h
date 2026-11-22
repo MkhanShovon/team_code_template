@@ -1,51 +1,22 @@
 /**
- * Author: Monjur Hossain Khan, OpenAI Codex
+ * Author: BUET_Orion
+ * Date: 2026-11-22
  * License: CC0
- * Description: Previous/next smaller/greater indices using a monotonic stack.
- * Strict variants use < or >; pass false for smaller-or-equal / greater-or-equal barriers.
+ * Description: res[i] = largest j < i with c(a[j], a[i]) (previous strictly
+ * smaller for less<T>), or -1. Use greater<T> for previous greater,
+ * less_equal / greater_equal for non-strict. For "next" versions, run on
+ * the reversed array and map j to n-1-j (none = n).
  * Time: O(N)
  * Status: tested
  */
 #pragma once
 
-template<class T>
-vi nextSmaller(const vector<T>& a, bool strict = true) {
-	vi res(sz(a), sz(a)), st;
-	rep(i,0,sz(a)) {
-		while (!st.empty() && (strict ? a[i] < a[st.back()] : a[i] <= a[st.back()]))
-			res[st.back()] = i, st.pop_back();
-		st.push_back(i);
-	}
-	return res;
-}
-template<class T>
-vi prevSmaller(const vector<T>& a, bool strict = true) {
-	vi res(sz(a), -1), st;
-	rep(i,0,sz(a)) {
-		while (!st.empty() && (strict ? a[i] <= a[st.back()] : a[i] < a[st.back()]))
-			st.pop_back();
-		if (!st.empty()) res[i] = st.back();
-		st.push_back(i);
-	}
-	return res;
-}
-template<class T>
-vi nextGreater(const vector<T>& a, bool strict = true) {
-	vi res(sz(a), sz(a)), st;
-	rep(i,0,sz(a)) {
-		while (!st.empty() && (strict ? a[i] > a[st.back()] : a[i] >= a[st.back()]))
-			res[st.back()] = i, st.pop_back();
-		st.push_back(i);
-	}
-	return res;
-}
-template<class T>
-vi prevGreater(const vector<T>& a, bool strict = true) {
-	vi res(sz(a), -1), st;
-	rep(i,0,sz(a)) {
-		while (!st.empty() && (strict ? a[i] >= a[st.back()] : a[i] > a[st.back()]))
-			st.pop_back();
-		if (!st.empty()) res[i] = st.back();
+template<class T, class C = less<T>>
+vll prevBetter(const vector<T>& a, C c = C()) {
+	vll res(len(a), -1), st;
+	fl(i, len(a)) {
+		while (len(st) && !c(a[st.back()], a[i])) st.pop_back();
+		if (len(st)) res[i] = st.back();
 		st.push_back(i);
 	}
 	return res;

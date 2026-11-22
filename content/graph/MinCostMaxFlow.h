@@ -21,7 +21,7 @@ struct MCMF {
 	};
 	int N;
 	vector<vector<edge>> ed;
-	vi seen;
+	vll seen;
 	vector<ll> dist, pi;
 	vector<edge*> par;
 
@@ -29,13 +29,13 @@ struct MCMF {
 
 	void addEdge(int from, int to, ll cap, ll cost) {
 		if (from == to) return;
-		ed[from].push_back(edge{ from,to,sz(ed[to]),cap,cost,0 });
-		ed[to].push_back(edge{ to,from,sz(ed[from])-1,0,-cost,0 });
+		ed[from].push_back(edge{ from,to,len(ed[to]),cap,cost,0 });
+		ed[to].push_back(edge{ to,from,len(ed[from])-1,0,-cost,0 });
 	}
 
 	void path(int s) {
-		fill(all(seen), 0);
-		fill(all(dist), INF);
+		fill(vr(seen), 0);
+		fill(vr(dist), INF);
 		dist[s] = 0; ll di;
 
 		__gnu_pbds::priority_queue<pair<ll, int>> q;
@@ -57,7 +57,7 @@ struct MCMF {
 				}
 			}
 		}
-		rep(i,0,N) pi[i] = min(pi[i] + dist[i], INF);
+		fl(i, N) pi[i] = min(pi[i] + dist[i], INF);
 	}
 
 	pair<ll, ll> maxflow(int s, int t) {
@@ -73,16 +73,16 @@ struct MCMF {
 				ed[x->to][x->rev].flow -= fl;
 			}
 		}
-		rep(i,0,N) for(edge& e : ed[i]) totcost += e.cost * e.flow;
+		fl(i, N) for(edge& e : ed[i]) totcost += e.cost * e.flow;
 		return {totflow, totcost/2};
 	}
 
 	// If some costs can be negative, call this before maxflow:
 	void setpi(int s) { // (otherwise, leave this out)
-		fill(all(pi), INF); pi[s] = 0;
+		fill(vr(pi), INF); pi[s] = 0;
 		int it = N, ch = 1; ll v;
 		while (ch-- && it--)
-			rep(i,0,N) if (pi[i] != INF)
+			fl(i, N) if (pi[i] != INF)
 			  for (edge& e : ed[i]) if (e.cap)
 				  if ((v = pi[i] + e.cost) < pi[e.to])
 					  pi[e.to] = v, ch = 1;
